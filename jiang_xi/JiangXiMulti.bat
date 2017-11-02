@@ -1,0 +1,1 @@
+for /L %%i in (1,1,2) do start D:\GsCrawlerV2\jiang_xi\JiangXi.bat

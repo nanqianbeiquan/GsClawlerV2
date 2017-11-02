@@ -1,0 +1,20 @@
+1、爬虫进程状态表，表结构设计
+
+create table crawler_status
+(crawler_id varchar(36)  -- 爬虫进程唯一标识，由uuid模块生成
+,crawler_name nvarchar(255)  -- 爬虫名称
+,host varchar(15)  -- 爬虫程序部署的主机ip或host
+,pid int  -- 系统进程id
+,status int  -- 爬虫状态 {0：健康，4：死亡，2：需要人工介入查看，9：更新完成}
+,last_update_time datetime  -- 爬虫状态最后汇报时间
+,total_update_cnt -- 爬虫程序更新总数
+)
+
+2、本地启动守护进程负责监控爬虫进程
+a. 最后更新时间距离当前时间大于5分钟且爬虫状态为0的，检查pid是否存在，
+	如果存在：
+	   	将爬虫进程杀死；
+	更改爬虫状态为1，启动一个新进程
+b. 如果爬虫状态为0，最后更新时间小于5分钟，但是最近10分钟更新总数未增加的，将状态修改为2，需要人工介入查看具体情况
+c. 
+
